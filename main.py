@@ -1,19 +1,37 @@
 import requests
 
-locations_list = {
-  1 : ['Череповец', 'Cherepovets'],
-  2 : ['Аэропорт Шереметьево', 'SVO'],
-  3 : ['Лондон', 'London']
+locations = {
+  1 : 'Череповец',
+  2 : 'Аэропорт Шереметьево',
+  3 : 'Лондон',
 }
 
-print('Выберите местность из списка:')
-for i in range (1, 4):
-  print(i, '\t', locations_list.get(i)[0])
+'''
+# list of options provided for reference only (see 'options' variable below)
 
-location_selected = locations_list.get(int(input()))[1]
-url_template = 'http://wttr.in/{}?nTqM&lang=ru'
-url = url_template.format(location_selected)
-#url = f'https://wttr.in/{location_selected}?nTqm&lang=ru'
-response = requests.get(url)
-response.raise_for_status()
-print(response.text)
+options = {
+    n:  'narrow version (only day and night)',
+    T:  'force plain text, disable colors',
+    q:  'quiet version (no "Weather report" text)',
+    M:  'metric (SI), but show wind speed in m/s',
+  }
+
+# list of languages provided for reference only (see 'language' variable below)
+
+languages = {
+    English :  'en',
+    French  :  'fr',
+    German  :  'de',
+    Russian :  'ru',
+  }
+'''
+
+for location in locations:
+  location_selected = locations[location]
+  options = 'nTqM'
+  language = 'ru'
+  url_template = 'http://wttr.in/{}'
+  url = url_template.format(location_selected)
+  response = requests.get(url, params = (options + '&lang=' + language))
+  response.raise_for_status()
+  print(response.text)
